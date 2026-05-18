@@ -177,7 +177,7 @@ public static class BruteForce
         }
         return result;
     }
-    public static List<int[]> GetSubSets(int[] arr)
+    public static List<int[]> GetSubsetsBitMask(int[] arr)
     {
         List<int[]> result = new();
         int len = arr.Length;
@@ -195,6 +195,42 @@ public static class BruteForce
         }
         return result;
     }
+    public static int CountSubsets(int[] arr)
+    {
+        return 1 << arr.Length;
+    }
+
+    public static List<int[]> GetSubsets(int[] arr)
+    {
+        List<int[]> result = new();
+        var currentSubset = new List<int>();
+        int index = 0;
+        GetSubset(arr, index, currentSubset, result);
+        return result;
+    }
+    private static void GetSubset(int[] arr, int index, List<int> current, List<int[]> result)
+    {
+        int len = arr.Length;
+        if (index == len)
+        {
+            result.Add(current.ToArray());
+            return;
+        }
+        else 
+        {
+            
+            GetSubset(arr, index + 1, current, result);
+            current.Add(arr[index]);
+            
+            GetSubset(arr, index + 1, current, result);
+            current.RemoveAt(current.Count - 1);
+
+
+        }
+    }
+
+
+
 
     // Console rendering utility functions
     static void p<T>(T t) => Console.Write($"{t}");
@@ -233,5 +269,14 @@ public static class BruteForce
         }
         p("]");
         Console.WriteLine();
+    }
+    public static void PrintBinaryMasks(int[] arr)
+    {
+        int len = arr.Length;
+        int total = 1 << len;
+        for (int mask = 0; mask < total; mask++)
+        {
+            Console.WriteLine(Convert.ToString(mask, 2).PadLeft(len, '0'));
+        }
     }
 }

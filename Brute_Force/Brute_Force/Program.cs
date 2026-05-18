@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace Brute_Force;
 
@@ -10,10 +11,14 @@ public static class Program
     public static void Main()
     {
         int[] nums = [6, 1, 2, 3, 7, 11, 4, 9, 8, 0, -1, 2];
-        int[] n = [1, 2, 3, 4, 5, 6];
+        int[] n = [1, 2, 3];
 
-        var pairs = BruteForce.GetPairsWithSelf(n);
-        BruteForce.PrintListOfArr(pairs);
+        var lst = BruteForce.GetSubsets(n);
+        BruteForce.PrintListOfArr(lst);
+
+        lst = BruteForce.GetSubsetsBitMask(n);
+        BruteForce.PrintListOfArr(lst);
+
 
 
 
