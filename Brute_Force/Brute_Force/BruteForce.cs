@@ -218,20 +218,41 @@ public static class BruteForce
         }
         else 
         {
-            
-            GetSubset(arr, index + 1, current, result);
             current.Add(arr[index]);
-            
             GetSubset(arr, index + 1, current, result);
             current.RemoveAt(current.Count - 1);
-
-
+            GetSubset(arr, index + 1, current, result);
         }
     }
-
-
-
-
+    public static List<int[]> Permutations(int[] arr)
+    {
+        var current = new List<int>();
+        var len = arr.Length;
+        var used = new bool[len];
+        var result = new List<int[]>();
+        Permutations(arr, current, used, result);
+        return result;
+    }
+    private static void Permutations(int[] arr, List<int> current, bool[] used, List<int[]> result  )
+    {
+        int len = arr.Length;
+        if(current.Count == len)
+        {
+            result.Add(current.ToArray());
+            return;
+        }
+        for(int i = 0; i < len; i++)
+        {
+            if (used[i] == false)
+            {
+                current.Add(arr[i]);
+                used[i] = true;
+                Permutations(arr, current, used, result);
+                current.RemoveAt(current.Count - 1);
+                used[i] = false;
+            }
+        }
+    }
     // Console rendering utility functions
     static void p<T>(T t) => Console.Write($"{t}");
     public static void PrintListOfArr(List<int[]> list)
@@ -253,6 +274,15 @@ public static class BruteForce
             Console.WriteLine();
 
         }
+    }
+    public static int CountPermutation(int[] arr)
+    {
+        return CountPermutation(arr.Length);
+    }
+    private static int CountPermutation(int len)
+    {
+        if (len == 1) return 1;
+        return len * CountPermutation(len - 1) ;
     }
     public static void PrintArr(int[] arr)
     {

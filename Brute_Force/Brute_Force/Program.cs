@@ -10,14 +10,12 @@ public static class Program
 
     public static void Main()
     {
-        int[] nums = [6, 1, 2, 3, 7, 11, 4, 9, 8, 0, -1, 2];
+        int[] nums = [1,2,3,4,5,6];
         int[] n = [1, 2, 3];
+        int[] numbers = [1, 2, 3, 4, 5];
 
-        var lst = BruteForce.GetSubsets(n);
-        BruteForce.PrintListOfArr(lst);
-
-        lst = BruteForce.GetSubsetsBitMask(n);
-        BruteForce.PrintListOfArr(lst);
+        var fact = BruteForce.CountPermutation(numbers);
+        p(fact);
 
 
 
