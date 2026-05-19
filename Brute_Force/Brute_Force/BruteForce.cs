@@ -253,6 +253,16 @@ public static class BruteForce
             }
         }
     }
+    public static long CountPermutation(int[] arr)
+    {
+        return CountPermutation(arr.Length);
+    }
+    private static long CountPermutation(long len)
+    {
+        if (len == 1) return 1;
+        return len * CountPermutation(len - 1);
+    }
+
     // Console rendering utility functions
     static void p<T>(T t) => Console.Write($"{t}");
     public static void PrintListOfArr(List<int[]> list)
@@ -275,15 +285,7 @@ public static class BruteForce
 
         }
     }
-    public static int CountPermutation(int[] arr)
-    {
-        return CountPermutation(arr.Length);
-    }
-    private static int CountPermutation(int len)
-    {
-        if (len == 1) return 1;
-        return len * CountPermutation(len - 1) ;
-    }
+    
     public static void PrintArr(int[] arr)
     {
         p("  [");
