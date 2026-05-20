@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 namespace Brute_Force;
 
 public static class BruteForce
@@ -262,6 +263,86 @@ public static class BruteForce
         if (len == 1) return 1;
         return len * CountPermutation(len - 1);
     }
+    public static List<int[]> PermutationsR(int[] arr)
+    {
+        var current = new List<int>();
+        var len = arr.Length;
+        var result = new List<int[]>();
+        PermutationsR(arr, current, result);
+        return result;
+    }
+    private static void PermutationsR(int[] arr, List<int> current, List<int[]> result)
+    {
+        int len = arr.Length;
+        if (current.Count == len)
+        {
+            result.Add(current.ToArray());
+            return;
+        }
+        for (int i = 0; i < len; i++)
+        {
+            current.Add(arr[i]);
+            PermutationsR(arr, current, result);
+            current.RemoveAt(current.Count - 1);
+        }
+    }
+    public static long CountPermutationR(int[] arr)
+    {
+        long len = (long)arr.Length;
+        return (long)Math.Pow(len, len);
+    }
+
+    public static List<int[]> K_Combinations(int k , int[] arr)
+    {
+        List<int[]> result = new();
+        List<int> current = new();
+        int start = 0;
+        K_Combinations(arr, start, k, current, result);
+        return result;
+    }
+    private static void K_Combinations(int[] arr, int start,int k, List<int> current, List<int[]> result)
+    {
+        if (current.Count == k)
+        {
+            result.Add(current.ToArray());
+            return;
+        }
+       
+        for(int i = start; i < arr.Length; i++)
+        {
+            current.Add(arr[i]);
+            K_Combinations(arr, i + 1,k, current, result);
+            current.RemoveAt(current.Count - 1);
+        }
+    }
+
+    public static List<int[]> Combinations_Sum(int target, int[] arr)
+    {
+        List<int[]> result = new();
+        List<int> current = new();
+        int start = 0;
+        int sum = 0;
+        Combinations_Sum(arr, start, target, sum,  current, result);
+        return result;
+    }
+    private static void Combinations_Sum(int[] arr, int start, int target,int currentSum, List<int> current, List<int[]> result)
+    {
+        
+        if (currentSum == target)
+        {
+            result.Add(current.ToArray());
+            return;
+        }
+        if (currentSum > target) return;
+        for (int i = start; i < arr.Length; i++)
+        {
+            
+            current.Add(arr[i]);
+            Combinations_Sum(arr, i + 1, target, currentSum + arr[i], current, result);
+            current.RemoveAt(current.Count - 1);
+        }
+    }
+
 
     // Console rendering utility functions
     static void p<T>(T t) => Console.Write($"{t}");
