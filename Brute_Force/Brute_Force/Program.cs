@@ -14,8 +14,8 @@ public static class Program
         int[] n = [1, 2, 3,4];
         int[] numbers = [1, 2, 3, 4, 5,6,7,8,9,10,11,12];
 
-        var fact = BruteForce.K_Combinations(2, n);
-        BruteForce.PrintListOfArr(fact);
+        p(BruteForce.CountPermutation(n));
+        p(BruteForce.Factorial(4));
 
 
 

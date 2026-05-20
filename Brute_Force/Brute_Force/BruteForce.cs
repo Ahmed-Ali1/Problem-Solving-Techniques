@@ -62,6 +62,11 @@ public static class BruteForce
         }
         return max;
     }
+    public static long Factorial(int n)
+    {
+        if (n == 1) return 1;
+        return Factorial(n - 1) * n;
+    }
     public static bool IsEven(int num)
     {
         return num % 2 == 0;
@@ -256,13 +261,9 @@ public static class BruteForce
     }
     public static long CountPermutation(int[] arr)
     {
-        return CountPermutation(arr.Length);
+        return Factorial(arr.Length);
     }
-    private static long CountPermutation(long len)
-    {
-        if (len == 1) return 1;
-        return len * CountPermutation(len - 1);
-    }
+   
     public static List<int[]> PermutationsR(int[] arr)
     {
         var current = new List<int>();
