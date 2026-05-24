@@ -1,10 +1,13 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
+
 namespace Brute_Force;
 
+// brute force for integers
 public static class BruteForce
 {
+    // 1. Linear Search by Index
     public static int LinearSearch(int[] arr, int target)
     {
 
@@ -18,10 +21,12 @@ public static class BruteForce
         }
         return -1;
     }
+    // Linear Search by Existance
     public static bool Contains(int[] arr, int target)
     {
         return LinearSearch(arr, target) != -1;
     }
+    // Linear Search Appearnce Count
     public static int AppearenceCount(int[] arr, int target)
     {
         int count = 0;
@@ -35,6 +40,7 @@ public static class BruteForce
         }
         return count;
     }
+    // Linear Search Finding Min
     public static int Min(int[] arr)
     {
         int min = int.MaxValue;
@@ -48,7 +54,7 @@ public static class BruteForce
         }
         return min;
     }
-
+    // Linear Search Finding Max
     public static int Max(int[] arr)
     {
         int max = int.MinValue;
@@ -62,19 +68,31 @@ public static class BruteForce
         }
         return max;
     }
-    public static long Factorial(int n)
+    // Recursive Factorail
+    public static long Factorial_Recursive(int n)
     {
         if (n == 1) return 1;
-        return Factorial(n - 1) * n;
+        return Factorial_Recursive(n - 1) * n;
     }
+    // Iterative Factorial
+    public static long Factorial_Iterative(int n)
+    {
+        long factorial = (long)n;
+        for(int i = n; i > 1; i--)
+        {
+            factorial = factorial * (i - 1);
+        }
+        return factorial;
+
+    }
+
     public static bool IsEven(int num)
     {
         return num % 2 == 0;
     }
-
+    // Nested Loop Duplicate Existance
     public static bool HasDuplicates(int[] arr)
     {
-
         int len = arr.Length;
         for (int i = 0; i < len; i++)
         {
@@ -89,6 +107,7 @@ public static class BruteForce
         }
         return false;
     }
+    // Nested Loop Duplicate Clearance
     public static List<int> RemoveDuplicates(int[] arr)
     {
         int len = arr.Length;
@@ -109,6 +128,7 @@ public static class BruteForce
         }
         return result;
     }
+    // Nested Loop Sum Of Two
     public static int[] TwoSum(int[] arr, int target)
     {
 
@@ -128,7 +148,8 @@ public static class BruteForce
         }
         return [-1, -1];
     }
-    public static List<int[]> GetPairsWithSelf(int[] arr)
+    //Nested Loop Unique Pairs
+    public static List<int[]> GetUniquePairs(int[] arr)
     {
 
         List<int[]> result = new();
@@ -145,6 +166,7 @@ public static class BruteForce
         return result;
 
     }
+    //Nested Loop All Possible Pairs 
     public static List<int[]> GetPairs(int[] arr)
     {
 
@@ -162,7 +184,8 @@ public static class BruteForce
         return result;
 
     }
-    public static List<int[]> GetSubArrays(int[] arr)
+    // Nested Loop Sub Arrays
+    public static List<int[]> SubArrays(int[] arr)
     {
         List<int[]> result = new();
         int len = arr.Length;
@@ -183,7 +206,8 @@ public static class BruteForce
         }
         return result;
     }
-    public static List<int[]> GetSubsetsBitMask(int[] arr)
+    // BitMask Subsets
+    public static List<int[]> Subsets_BitMask(int[] arr)
     {
         List<int[]> result = new();
         int len = arr.Length;
@@ -201,13 +225,15 @@ public static class BruteForce
         }
         return result;
     }
+    // Subset Count Bit
     public static int CountSubsets(int[] arr)
     {
         return 1 << arr.Length;
     }
-
-    public static List<int[]> GetSubsets(int[] arr)
+    // Recursive Subsets
+    public static List<int[]> Subsets_Recursive(int[] arr) 
     {
+        // Driver
         List<int[]> result = new();
         var currentSubset = new List<int>();
         int index = 0;
@@ -216,6 +242,7 @@ public static class BruteForce
     }
     private static void GetSubset(int[] arr, int index, List<int> current, List<int[]> result)
     {
+        // Helper
         int len = arr.Length;
         if (index == len)
         {
@@ -230,17 +257,20 @@ public static class BruteForce
             GetSubset(arr, index + 1, current, result);
         }
     }
-    public static List<int[]> Permutations(int[] arr)
+    // Recursive Unique Permuations
+    public static List<int[]> PermutationsUnique_Recursive(int[] arr)
     {
+        //Driver
         var current = new List<int>();
         var len = arr.Length;
         var used = new bool[len];
         var result = new List<int[]>();
-        Permutations(arr, current, used, result);
+        PermutationsUnique_Recursive(arr, current, used, result);
         return result;
     }
-    private static void Permutations(int[] arr, List<int> current, bool[] used, List<int[]> result  )
+    private static void PermutationsUnique_Recursive(int[] arr, List<int> current, bool[] used, List<int[]> result  )
     {
+        //Helper
         int len = arr.Length;
         if(current.Count == len)
         {
@@ -253,27 +283,30 @@ public static class BruteForce
             {
                 current.Add(arr[i]);
                 used[i] = true;
-                Permutations(arr, current, used, result);
+                PermutationsUnique_Recursive(arr, current, used, result);
                 current.RemoveAt(current.Count - 1);
                 used[i] = false;
             }
         }
     }
-    public static long CountPermutation(int[] arr)
+    // Count Of Unique Permutation 
+    public static long CountPermutationUnique(int[] arr)
     {
-        return Factorial(arr.Length);
+        return Factorial_Iterative(arr.Length);
     }
-   
-    public static List<int[]> PermutationsR(int[] arr)
+   // Recursive All Possible Permutations 
+    public static List<int[]> Permutations_Recursive(int[] arr)
     {
+        //Driver
         var current = new List<int>();
         var len = arr.Length;
         var result = new List<int[]>();
-        PermutationsR(arr, current, result);
+        Permutations_Recursive(arr, current, result);
         return result;
     }
-    private static void PermutationsR(int[] arr, List<int> current, List<int[]> result)
+    private static void Permutations_Recursive(int[] arr, List<int> current, List<int[]> result)
     {
+        //Helper
         int len = arr.Length;
         if (current.Count == len)
         {
@@ -283,52 +316,61 @@ public static class BruteForce
         for (int i = 0; i < len; i++)
         {
             current.Add(arr[i]);
-            PermutationsR(arr, current, result);
+            Permutations_Recursive(arr, current, result);
             current.RemoveAt(current.Count - 1);
         }
     }
-    public static long CountPermutationR(int[] arr)
+    // Count of All Possible Permutation
+    public static long CountPermutation(int[] arr)
     {
         long len = (long)arr.Length;
         return (long)Math.Pow(len, len);
     }
 
-    public static List<int[]> K_Combinations(int k , int[] arr)
+    /// <summary>
+    /// Return List Of k-Combinations of array of integers
+    /// </summary>
+    /// <param name="k"></param>
+    /// <param name="array"></param>
+    /// <returns></returns>
+    public static List<int[]> CombinationsK_Recursive(int k , int[] array)
     {
+        // Driver
         List<int[]> result = new();
         List<int> current = new();
         int start = 0;
-        K_Combinations(arr, start, k, current, result);
+        CombinationsK_Recursive(array, start, k, current, result);
         return result;
     }
-    private static void K_Combinations(int[] arr, int start,int k, List<int> current, List<int[]> result)
+    private static void CombinationsK_Recursive(int[] arr, int start,int k, List<int> current, List<int[]> result)
     {
+        // Helper
         if (current.Count == k)
         {
             result.Add(current.ToArray());
             return;
         }
-       
         for(int i = start; i < arr.Length; i++)
         {
             current.Add(arr[i]);
-            K_Combinations(arr, i + 1,k, current, result);
+            CombinationsK_Recursive(arr, i + 1,k, current, result);
             current.RemoveAt(current.Count - 1);
         }
     }
-
-    public static List<int[]> Combinations_Sum(int target, int[] arr)
+    // Recursive Combination Sum
+    public static List<int[]> CombinationsSum_Recursive(int target, int[] arr)
     {
+        // Driver
         List<int[]> result = new();
         List<int> current = new();
         int start = 0;
         int sum = 0;
-        Combinations_Sum(arr, start, target, sum,  current, result);
+        CombinationsSum_Recursive(arr, start, target, sum,  current, result);
         return result;
     }
-    private static void Combinations_Sum(int[] arr, int start, int target,int currentSum, List<int> current, List<int[]> result)
+    private static void CombinationsSum_Recursive(int[] arr, int start, int target,int currentSum, List<int> current, List<int[]> result)
     {
-        
+        // Helper
         if (currentSum == target)
         {
             result.Add(current.ToArray());
@@ -339,58 +381,11 @@ public static class BruteForce
         {
             
             current.Add(arr[i]);
-            Combinations_Sum(arr, i + 1, target, currentSum + arr[i], current, result);
+            CombinationsSum_Recursive(arr, i + 1, target, currentSum + arr[i], current, result);
             current.RemoveAt(current.Count - 1);
         }
     }
 
 
-    // Console rendering utility functions
-    static void p<T>(T t) => Console.Write($"{t}");
-    public static void PrintListOfArr(List<int[]> list)
-    {
-        foreach (var arr in list)
-        {
-            p("  [");
-            int end = arr.Length;
-            int count = 0;
-
-            foreach (var item in arr)
-            {
-                p(item);
-                count++;
-                if (count == end) continue;
-                p(", ");
-            }
-            p("]");
-            Console.WriteLine();
-
-        }
-    }
     
-    public static void PrintArr(int[] arr)
-    {
-        p("  [");
-        int end = arr.Length;
-        int count = 0;
-
-        foreach (var item in arr)
-        {
-            p(item);
-            count++;
-            if (count == end) continue;
-            p(", ");
-        }
-        p("]");
-        Console.WriteLine();
-    }
-    public static void PrintBinaryMasks(int[] arr)
-    {
-        int len = arr.Length;
-        int total = 1 << len;
-        for (int mask = 0; mask < total; mask++)
-        {
-            Console.WriteLine(Convert.ToString(mask, 2).PadLeft(len, '0'));
-        }
-    }
 }
