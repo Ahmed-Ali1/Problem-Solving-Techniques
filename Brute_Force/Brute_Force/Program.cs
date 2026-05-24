@@ -13,7 +13,7 @@ public static class Program
     [DllImport("user32.dll")]
     private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
 
-    private const byte VK_F11 = 0x7A; // كود زر F11 لملء الشاشة في الـ Windows Terminal
+    private const byte VK_F11 = 0x7A; 
     private const uint KEYEVENTF_KEYUP = 0x0002;
     public static void Main()
     {
@@ -25,20 +25,6 @@ public static class Program
 
 
         var maze = GenerateMaze();
-        
-
-        //var grid = new int[,] {
-        //    {0,0,1,0,1,0,0,1,0,1},
-        //    {1,0,0,0,1,0,0,0,1,0},
-        //    {1,0,1,0,1,0,1,0,1,0},
-        //    {1,1,1,0,0,0,1,0,0,0},
-        //    {1,0,1,1,1,0,1,0,1,0},
-        //    {1,0,0,0,1,1,0,0,1,0},
-        //    {1,0,0,0,0,0,0,0,1,0},
-        //    {1,0,0,0,0,0,0,0,0,0}
-        //    };
-
-        //PrintGeneratedGrid(grid, 1, 1, 23, 23);
         SolveMaze(maze);
        
 
