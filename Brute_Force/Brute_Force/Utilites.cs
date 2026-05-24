@@ -13,7 +13,7 @@ public static class Utilites
     public static void PL() => Console.WriteLine("");
 
 
-    public static void PrintListOfArr(List<int[]> list)
+    public static void PrintListOfArray(List<int[]> list)
     {
         foreach (var arr in list)
         {
@@ -34,7 +34,7 @@ public static class Utilites
         }
     }
 
-    public static void PrintArr(int[] arr)
+    public static void PrintArray(int[] arr)
     {
         P("[");
         int end = arr.Length;
@@ -75,7 +75,38 @@ public static class Utilites
             PL(Convert.ToString(mask, 2).PadLeft(len, '0'));
         }
     }
-    public static class ConsoleVisualizer
+    public static void PrintGeneratedGrid(int[,] grid, int sRow, int sCol, int eRow, int eCol)
+    {
+        int rows = grid.GetLength(0);
+        int cols = grid.GetLength(1);
+
+        for (int r = 0; r < rows; r++)
+        {
+            for (int c = 0; c < cols; c++)
+            {
+                if (r == sRow && c == sCol)
+                {
+                    Console.Write("S ");
+                }
+                else if (r == eRow && c == eCol)
+                {
+                    Console.Write("E ");
+                }
+                else if (grid[r, c] == 1)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.Write("▓▓");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.Write("  ");
+                }
+            }
+            Console.WriteLine();
+        }
+    }
+    public static class MazeVisualizer
     {
         public static string[,] RenderGrid(int[,] grid, bool[,] visited, bool[,] path, int currentRow, int currentCol, int eRow, int eCol)
         {
@@ -137,7 +168,7 @@ public static class Utilites
             }
         }
 
-        public static void VisualHook(int[,] grid, bool[,] visited, bool[,] path, int currentRow, int currentCol, int eRow, int eCol)
+        public static void VisualHook(int[,] grid, bool[,] visited, bool[,] path, int currentRow, int currentCol, int eRow, int eCol,int delayMs = 100)
         {
             
             string[,] canvas = RenderGrid(grid, visited,path, currentRow, currentCol, eRow, eCol);
@@ -145,42 +176,126 @@ public static class Utilites
             
             DrawStep(canvas);
 
-            
-            System.Threading.Thread.Sleep(50);
+            System.Threading.Thread.Sleep(delayMs);
+
         }
 
     }
 
-    public static void PrintGeneratedGrid(int[,] grid, int sRow, int sCol, int eRow, int eCol)
+    public static class WordSearchVisualizer
     {
-        int rows = grid.GetLength(0);
-        int cols = grid.GetLength(1);
-
-        for (int r = 0; r < rows; r++)
+        public static void RenderGrid(char[,] grid)
         {
-            for (int c = 0; c < cols; c++)
+            int rows = grid.GetLength(0);
+            int cols = grid.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
             {
-                if (r == sRow && c == sCol)
+                for (int j = 0; j < cols; j++)
                 {
-                    Console.Write("S ");
+                    Console.Write(grid[i, j] + " ");
                 }
-                else if (r == eRow && c == eCol)
+                Console.WriteLine();
+            }
+        }
+        public static void DrawStep(char[,] grid, bool[,] visited, int currentRow, int currentCol)
+        {
+            Console.CursorVisible = false;
+
+            Console.SetCursorPosition(0, 0);
+
+            int rows = grid.GetLength(0);
+            int cols = grid.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
                 {
-                    Console.Write("E "); 
+                    if (i == currentRow && j == currentCol)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(grid[i, j] + " ");
+                    }
+                    else if (visited[i, j])
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(grid[i, j] + " ");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.Write(grid[i, j] + " ");
+                    }
                 }
-                else if (grid[r, c] == 1)
+                Console.WriteLine();
+            }
+            Console.ResetColor();
+        }
+        public static void VisualHook(char[,] grid, bool[,] visited, int currentRow, int currentCol, int delayMs = 100)
+        {
+            DrawStep(grid, visited, currentRow, currentCol);
+            System.Threading.Thread.Sleep(delayMs);
+        }
+    }
+    
+    public static class BruteForceVisualizer
+    {
+        public static void Render(int[] arr)
+        {
+            Console.Write("[ ");
+            for (int i = 0; i < arr.Length; i++)
+            {
+                Console.Write(arr[i] + (i < arr.Length - 1 ? ", " : " "));
+            }
+            Console.WriteLine("]");
+        }
+
+        public static void DrawStep(int[] arr, int currentIndex, int secondaryIndex = -1, string resultMessage = "")
+        {
+            Console.SetCursorPosition(0, 0);
+
+            Console.Write("[ ");
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (i == currentIndex)
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.Write("▓▓");
-                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(arr[i]);
+                }
+                else if (i == secondaryIndex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan; 
+                    Console.Write(arr[i]);
                 }
                 else
                 {
-                    Console.Write("  ");
+                    Console.ForegroundColor = ConsoleColor.Gray; 
+                    Console.Write(arr[i]);
                 }
+
+                Console.ResetColor();
+                if (i < arr.Length - 1) Console.Write(", ");
             }
-            Console.WriteLine();
+            Console.WriteLine(" ]\n");
+
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, 1);
+            if (!string.IsNullOrEmpty(resultMessage))
+            {
+                Console.ForegroundColor = ConsoleColor.Green; 
+                Console.WriteLine(resultMessage);
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.WriteLine(); 
+            }
+
+        }
+        public static void VisualHook(int[] arr, int currentIndex, int secondaryIndex = -1, int delayMs = 300)
+        {
+            DrawStep(arr, currentIndex, secondaryIndex,"");
+            System.Threading.Thread.Sleep(delayMs);
         }
     }
-
 }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
+using static Brute_Force.Utilites.BruteForceVisualizer;
 
 namespace Brute_Force;
 
@@ -14,17 +15,31 @@ public static class BruteForce
         int len = arr.Length;
         for (int i = 0; i < len; i++)
         {
+            VisualHook(arr, i);
             if (arr[i] == target)
             {
+                DrawStep(arr, i, -1, $"Result: Found at index {i}");
                 return i;
             }
         }
+        DrawStep(arr, -1, -1, $"Result: Not Found (-1)");
         return -1;
     }
     // Linear Search by Existance
     public static bool Contains(int[] arr, int target)
     {
-        return LinearSearch(arr, target) != -1;
+        int len = arr.Length;
+        for (int i = 0; i < len; i++)
+        {
+            VisualHook (arr, i);
+            if (arr[i] == target)
+            {
+                DrawStep(arr, i, -1, $"Result: True (Array Contains number {target})");
+                return true;
+            }
+        }
+        DrawStep(arr, -1, -1, $"Result: False (Array doesn't contains number {target})");
+        return false;
     }
     // Linear Search Appearnce Count
     public static int AppearenceCount(int[] arr, int target)
@@ -33,11 +48,14 @@ public static class BruteForce
         int len = arr.Length;
         for (int i = 0; i < len; i++)
         {
+            VisualHook(arr, i);
+
             if (arr[i] == target)
             {
                 count++;
             }
         }
+        DrawStep(arr, -1, -1, $"Result: Number {target} Appeared {count} times");
         return count;
     }
     // Linear Search Finding Min
@@ -47,11 +65,13 @@ public static class BruteForce
         int len = arr.Length;
         for (int i = 0; i < len; i++)
         {
+            VisualHook(arr, i);
             if (arr[i] < min)
             {
                 min = arr[i];
             }
         }
+        DrawStep(arr, -1, -1, $"Result: Min number is {min}");
         return min;
     }
     // Linear Search Finding Max
@@ -61,11 +81,13 @@ public static class BruteForce
         int len = arr.Length;
         for (int i = 0; i < len; i++)
         {
+            VisualHook(arr, i,max);
             if (arr[i] > max)
             {
                 max = arr[i];
             }
         }
+        DrawStep(arr, -1, -1, $"Result: Max number is {max}");
         return max;
     }
     // Recursive Factorail
@@ -78,7 +100,7 @@ public static class BruteForce
     public static long Factorial_Iterative(int n)
     {
         long factorial = (long)n;
-        for(int i = n; i > 1; i--)
+        for (int i = n; i > 1; i--)
         {
             factorial = factorial * (i - 1);
         }
@@ -96,15 +118,18 @@ public static class BruteForce
         int len = arr.Length;
         for (int i = 0; i < len; i++)
         {
+            
             for (int j = i + 1; j < len; j++)
             {
+                VisualHook(arr, i,j);
                 if (arr[i] == arr[j])
                 {
-
+                    DrawStep(arr, i, j, $"Result: True (Duplicate found at index {i} , {j})");
                     return true;
                 }
             }
         }
+        DrawStep(arr, -1, -1, $"Result: False (No duplicates)");
         return false;
     }
     // Nested Loop Duplicate Clearance
@@ -131,7 +156,6 @@ public static class BruteForce
     // Nested Loop Sum Of Two
     public static int[] TwoSum(int[] arr, int target)
     {
-
         int complement;
         int len = arr.Length;
 
@@ -140,12 +164,15 @@ public static class BruteForce
             complement = target - arr[i];
             for (int j = i + 1; j < len; j++)
             {
+                VisualHook(arr, i, j);
                 if (complement == arr[j])
                 {
+                    DrawStep(arr, i, j, $"Result: Two sum of {target} are indexes {i}, {j}");
                     return [i, j];
                 }
             }
         }
+        DrawStep(arr, -1, -1,$"Result: Two sum of {target} not found");
         return [-1, -1];
     }
     //Nested Loop Unique Pairs
@@ -231,7 +258,7 @@ public static class BruteForce
         return 1 << arr.Length;
     }
     // Recursive Subsets
-    public static List<int[]> Subsets_Recursive(int[] arr) 
+    public static List<int[]> Subsets_Recursive(int[] arr)
     {
         // Driver
         List<int[]> result = new();
@@ -249,7 +276,7 @@ public static class BruteForce
             result.Add(current.ToArray());
             return;
         }
-        else 
+        else
         {
             current.Add(arr[index]);
             GetSubset(arr, index + 1, current, result);
@@ -268,16 +295,16 @@ public static class BruteForce
         PermutationsUnique_Recursive(arr, current, used, result);
         return result;
     }
-    private static void PermutationsUnique_Recursive(int[] arr, List<int> current, bool[] used, List<int[]> result  )
+    private static void PermutationsUnique_Recursive(int[] arr, List<int> current, bool[] used, List<int[]> result)
     {
         //Helper
         int len = arr.Length;
-        if(current.Count == len)
+        if (current.Count == len)
         {
             result.Add(current.ToArray());
             return;
         }
-        for(int i = 0; i < len; i++)
+        for (int i = 0; i < len; i++)
         {
             if (used[i] == false)
             {
@@ -294,7 +321,7 @@ public static class BruteForce
     {
         return Factorial_Iterative(arr.Length);
     }
-   // Recursive All Possible Permutations 
+    // Recursive All Possible Permutations 
     public static List<int[]> Permutations_Recursive(int[] arr)
     {
         //Driver
@@ -333,7 +360,7 @@ public static class BruteForce
     /// <param name="k"></param>
     /// <param name="array"></param>
     /// <returns></returns>
-    public static List<int[]> CombinationsK_Recursive(int k , int[] array)
+    public static List<int[]> CombinationsK_Recursive(int k, int[] array)
     {
         // Driver
         List<int[]> result = new();
@@ -342,7 +369,7 @@ public static class BruteForce
         CombinationsK_Recursive(array, start, k, current, result);
         return result;
     }
-    private static void CombinationsK_Recursive(int[] arr, int start,int k, List<int> current, List<int[]> result)
+    private static void CombinationsK_Recursive(int[] arr, int start, int k, List<int> current, List<int[]> result)
     {
         // Helper
         if (current.Count == k)
@@ -350,10 +377,10 @@ public static class BruteForce
             result.Add(current.ToArray());
             return;
         }
-        for(int i = start; i < arr.Length; i++)
+        for (int i = start; i < arr.Length; i++)
         {
             current.Add(arr[i]);
-            CombinationsK_Recursive(arr, i + 1,k, current, result);
+            CombinationsK_Recursive(arr, i + 1, k, current, result);
             current.RemoveAt(current.Count - 1);
         }
     }
@@ -365,10 +392,10 @@ public static class BruteForce
         List<int> current = new();
         int start = 0;
         int sum = 0;
-        CombinationsSum_Recursive(arr, start, target, sum,  current, result);
+        CombinationsSum_Recursive(arr, start, target, sum, current, result);
         return result;
     }
-    private static void CombinationsSum_Recursive(int[] arr, int start, int target,int currentSum, List<int> current, List<int[]> result)
+    private static void CombinationsSum_Recursive(int[] arr, int start, int target, int currentSum, List<int> current, List<int[]> result)
     {
         // Helper
         if (currentSum == target)
@@ -379,7 +406,7 @@ public static class BruteForce
         if (currentSum > target) return;
         for (int i = start; i < arr.Length; i++)
         {
-            
+
             current.Add(arr[i]);
             CombinationsSum_Recursive(arr, i + 1, target, currentSum + arr[i], current, result);
             current.RemoveAt(current.Count - 1);
@@ -387,5 +414,5 @@ public static class BruteForce
     }
 
 
-    
+
 }

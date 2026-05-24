@@ -67,6 +67,68 @@ namespace Brute_Force
 
             return grid;
         }
+        public static char[,] GenerateGridWithWord(int rows, int cols, string word)
+        {
+            char[,] grid = new char[rows, cols];
+            Random random = new Random();
+            string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+            word = word.Replace(" ", "").ToUpper();
+
+            int[] dRow = { 1, 0, -1, 0 };
+            int[] dCol = { 0, 1, 0, -1 };
+
+            var possibilities = new List<(int r, int c, int dir)>();
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    for (int dir = 0; dir < 4; dir++)
+                    {
+                        possibilities.Add((r, c, dir));
+                    }
+                }
+            }
+            for (int i = possibilities.Count - 1; i > 0; i--)
+            {
+                int k = random.Next(i + 1);
+                var temp = possibilities[i];
+                possibilities[i] = possibilities[k];
+                possibilities[k] = temp;
+            }
+            bool placed = false;
+            foreach (var pos in possibilities)
+            {
+                int endRow = pos.r + dRow[pos.dir] * (word.Length - 1);
+                int endCol = pos.c + dCol[pos.dir] * (word.Length - 1);
+
+                if (endRow >= 0 && endRow < rows && endCol >= 0 && endCol < cols)
+                {
+                    for (int i = 0; i < word.Length; i++)
+                    {
+                        int currRow = pos.r + dRow[pos.dir] * i;
+                        int currCol = pos.c + dCol[pos.dir] * i;
+                        grid[currRow, currCol] = word[i];
+                    }
+                    placed = true;
+                    break;
+                }
+            }
+            if (!placed)
+            {
+                throw new InvalidOperationException("Word is too long.");
+            }
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (grid[i, j] == '\0')
+                    {
+                        grid[i, j] = alphabet[random.Next(alphabet.Length)];
+                    }
+                }
+            }
+            return grid;
+        }
     }
 }

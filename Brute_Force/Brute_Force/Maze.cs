@@ -34,15 +34,14 @@ namespace Brute_Force
             if (destionation)
             {
                 // show the grid
-                ConsoleVisualizer.VisualHook(grid, visited, path, currentRow, currentCol, eRow, eCol);
+                MazeVisualizer.VisualHook(grid, visited, path, currentRow, currentCol, eRow, eCol);
                 return true;
             }
             SetVisited(visited, currentRow, currentCol, true);
             SetVisited(path, currentRow, currentCol, true);
-
-
             // show the grid
-            ConsoleVisualizer.VisualHook(grid, visited, path, currentRow, currentCol, eRow, eCol);
+            MazeVisualizer.VisualHook(grid, visited, path, currentRow, currentCol, eRow, eCol);
+
 
             if (TryDirections(grid, visited, path, currentRow, currentCol, eRow, eCol))
             {
@@ -52,7 +51,7 @@ namespace Brute_Force
 
             SetVisited(path, currentRow, currentCol, false);
             // show the grid
-            ConsoleVisualizer.VisualHook(grid, visited, path, currentRow, currentCol, eRow, eCol);
+            MazeVisualizer.VisualHook(grid, visited, path, currentRow, currentCol, eRow, eCol);
 
             return false;
         }
