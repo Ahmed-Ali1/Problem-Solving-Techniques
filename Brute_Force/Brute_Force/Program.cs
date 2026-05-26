@@ -5,6 +5,7 @@ using static Brute_Force.Generator;
 using static Brute_Force.Maze;
 using static Brute_Force.WordSearch;
 using System.Runtime.CompilerServices;
+using System.Security;
 
 namespace Brute_Force;
 
@@ -23,7 +24,7 @@ public static class Program
     }
     static void StartSearchWord(string word)
     {
-        var grid = GenerateGridWithWord(58, 100, word);
+        var grid = GenerateGridWithWord(20, 20, word);
         Exist(grid, word);
     }
     public static void Main()
@@ -38,10 +39,10 @@ public static class Program
         Console.CursorVisible = false;
         Console.Clear();
 
-        StartSolveMaze();
-        //StartSearchWord("AHMEDALI");
-        //BruteForce.TwoSum([1, 2, 3, 4, 5, 6, 8,7,9],10);
-
+        //StartSolveMaze();
+        StartSearchWord("BRUTEFORCE");
+        //BruteForceVisualizer.Simulation.LinearSearch([1,2,3],3,1000);
+        //BruteForceVisualizer.Simulation.RemoveDuplicates([1, 2, 3, 1, 2, 3, 4], 1000);
 
 
     }
