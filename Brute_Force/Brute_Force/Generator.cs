@@ -130,5 +130,17 @@ namespace Brute_Force
             }
             return grid;
         }
+        public static char[,] GenerateChessBoard(int n, char symbol = '#')
+        {
+            var result = new char[n, n];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    result[i, j] = symbol;
+                }
+            }
+            return result;
+        }
     }
 }

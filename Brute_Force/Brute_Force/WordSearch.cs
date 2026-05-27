@@ -4,7 +4,7 @@ namespace Brute_Force
 {
     public static class WordSearch
     {
-        public static bool Exist(char[,] grid, string word)
+        public static bool Exist(char[,] grid, string word,int delayMs)
         {
             int rows = grid.GetLength(0);
             int cols = grid.GetLength(1);
@@ -14,7 +14,7 @@ namespace Brute_Force
                 for (int j = 0; j < cols; j++)
                 {
                     bool[,] visited = new bool[rows, cols];
-                    if (Exist(grid, visited, word, 0, i, j))
+                    if (Exist(grid, visited, word, 0, i, j,delayMs))
                     {
                         return true;
                     }
@@ -23,7 +23,7 @@ namespace Brute_Force
             return false;
         }
 
-        private static bool Exist(char[,] grid, bool[,] visited, string word, int index, int currentRow, int currentCol)
+        private static bool Exist(char[,] grid, bool[,] visited, string word, int index, int currentRow, int currentCol, int delayMs)
         {
             if (IsOutOfBounds(grid, currentRow, currentCol) ||
                 IsVisited(visited, currentRow, currentCol) ||
@@ -33,19 +33,19 @@ namespace Brute_Force
             {
                 SetVisited(visited, currentRow, currentCol, false);
                 // show the grid
-                WordSearchVisualizer.VisualHook(grid, visited, currentRow, currentCol, 100);
+                WordSearchVisualizer.VisualHook(grid, visited, currentRow, currentCol, delayMs);
                 
                 return true;
             }
             SetVisited(visited, currentRow, currentCol, true);
             // show the grid
-            WordSearchVisualizer.VisualHook(grid, visited, currentRow, currentCol, 100);
+            WordSearchVisualizer.VisualHook(grid, visited, currentRow, currentCol, delayMs);
             // explore directions
-            var result = TryDirections(grid, visited, word, index, currentRow, currentCol);
+            var result = TryDirections(grid, visited, word, index, currentRow, currentCol, delayMs);
 
             SetVisited(visited, currentRow, currentCol, false);
             // show the grid
-            WordSearchVisualizer.VisualHook(grid, visited, currentRow, currentCol, 100);
+            WordSearchVisualizer.VisualHook(grid, visited, currentRow, currentCol, delayMs);
             return result;
         }
 
@@ -81,7 +81,7 @@ namespace Brute_Force
 
         private static readonly int[] dRow = { 1, 0, -1, 0 };
         private static readonly int[] dCol = { 0, 1, 0, -1 };
-        private static bool TryDirections(char[,] grid, bool[,] visited, string word, int index, int currentRow, int currentCol)
+        private static bool TryDirections(char[,] grid, bool[,] visited, string word, int index, int currentRow, int currentCol, int delayMs)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -94,7 +94,7 @@ namespace Brute_Force
 
                 if (isValid)
                 {
-                    var success = Exist(grid, visited, word, index + 1, nextRow, nextCol);
+                    var success = Exist(grid, visited, word, index + 1, nextRow, nextCol, delayMs);
                     if (success)
                         return true;
                 }

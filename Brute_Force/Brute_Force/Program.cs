@@ -1,11 +1,9 @@
-﻿using System;
+﻿using System.Numerics;
 using System.Runtime.InteropServices;
-using static Brute_Force.Utilites;
 using static Brute_Force.Generator;
 using static Brute_Force.Maze;
 using static Brute_Force.WordSearch;
-using System.Runtime.CompilerServices;
-using System.Security;
+using static Brute_Force.Utilites;
 
 namespace Brute_Force;
 
@@ -22,27 +20,44 @@ public static class Program
         var maze = GenerateMaze();
         SolveMaze(maze);
     }
-    static void StartSearchWord(string word)
+    static void StartSearchWord(string word,int n,int delayMs = 300)
     {
-        var grid = GenerateGridWithWord(20, 20, word);
-        Exist(grid, word);
+        var grid = GenerateGridWithWord(n, n, word);
+        Exist(grid, word, delayMs);
+    }
+    static void StartNQueen(int n,int delayMs = 500)
+    {
+        var chessBoard = GenerateChessBoard(n);
+        NQueensVisalizer.Simulation.NQueen(chessBoard, n, delayMs);
     }
     public static void Main()
     {
-        
-     
+
+        // Consider Installing Windows Terminal
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         System.Threading.Thread.Sleep(100);
         keybd_event(VK_F11, 0, 0, 0);
-        keybd_event(VK_F11, 0, KEYEVENTF_KEYUP, 0)         ;
+        keybd_event(VK_F11, 0, KEYEVENTF_KEYUP, 0);
         System.Threading.Thread.Sleep(100);
         Console.CursorVisible = false;
         Console.Clear();
 
-        //StartSolveMaze();
-        StartSearchWord("BRUTEFORCE");
+        // fixed size maze, change it's dimentions from generator if needed 
+        //StartSolveMaze(); 
+        //StartSearchWord("BRUTEFORCE",15,200);
+        //StartNQueen(4,500);
         //BruteForceVisualizer.Simulation.LinearSearch([1,2,3],3,1000);
         //BruteForceVisualizer.Simulation.RemoveDuplicates([1, 2, 3, 1, 2, 3, 4], 1000);
+
+
+
+
+
+
+
+
+
+
 
 
     }

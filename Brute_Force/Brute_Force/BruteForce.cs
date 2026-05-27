@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using static Brute_Force.Utilites.BruteForceVisualizer;
+﻿
 
 namespace Brute_Force;
 
@@ -463,7 +460,7 @@ public static class BruteForce
         if (currentSum > target)
         {
             string fullText = "[" + string.Join(", ", current) + "]";
-            // إشارة سريعة للمستخدم أن المجموع الحالي (currentSum) تخطى الـ target
+
             onStepChecked?.Invoke(-1, -1, $"❌ INVALID: Sum ({currentSum}) > Target ({target}) | Path: {fullText}");
             return;
         }

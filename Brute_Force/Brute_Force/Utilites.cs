@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static Brute_Force.Utilites;
 
 
 namespace Brute_Force;
@@ -8,139 +9,6 @@ namespace Brute_Force;
 public static class Utilites
 {
     // Console rendering utility functions
-
-    public static class MazeVisualizer
-    {
-        public static string[,] RenderGrid(int[,] grid, bool[,] visited, bool[,] path, int currentRow, int currentCol, int eRow, int eCol)
-        {
-            int rows = grid.GetLength(0);
-            int cols = grid.GetLength(1);
-
-            string[,] renderedCanvas = new string[rows, cols];
-
-            for (int r = 0; r < rows; r++)
-            {
-                for (int c = 0; c < cols; c++)
-                {
-                    if (r == currentRow && c == currentCol)
-                    {
-                        renderedCanvas[r, c] = "🚀";
-                    }
-                    else if (r == eRow && c == eCol)
-                    {
-                        renderedCanvas[r, c] = "🏁";
-                    }
-
-                    else if (path[r, c])
-                    {
-                        renderedCanvas[r, c] = "🟢";
-                    }
-                    else if (visited[r, c])
-                    {
-                        renderedCanvas[r, c] = "🟡";
-                    }
-
-                    else if (grid[r, c] == 1)
-                    {
-                        renderedCanvas[r, c] = "▓▓";
-                    }
-                    else
-                    {
-                        renderedCanvas[r, c] = "  ";
-                    }
-                }
-            }
-
-            return renderedCanvas;
-        }
-        public static void DrawStep(string[,] renderedCanvas)
-        {
-            Console.CursorVisible = false;
-            Console.SetCursorPosition(0, 0);
-
-            int rows = renderedCanvas.GetLength(0);
-            int cols = renderedCanvas.GetLength(1);
-
-            for (int r = 0; r < rows; r++)
-            {
-                for (int c = 0; c < cols; c++)
-                {
-                    Console.Write(renderedCanvas[r, c]);
-                }
-                Console.WriteLine();
-            }
-        }
-
-        public static void VisualHook(int[,] grid, bool[,] visited, bool[,] path, int currentRow, int currentCol, int eRow, int eCol, int delayMs = 100)
-        {
-
-            string[,] canvas = RenderGrid(grid, visited, path, currentRow, currentCol, eRow, eCol);
-
-
-            DrawStep(canvas);
-
-            System.Threading.Thread.Sleep(delayMs);
-
-        }
-
-    }
-
-    public static class WordSearchVisualizer
-    {
-        public static void RenderGrid(char[,] grid)
-        {
-            int rows = grid.GetLength(0);
-            int cols = grid.GetLength(1);
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    Console.Write(grid[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
-        }
-        public static void DrawStep(char[,] grid, bool[,] visited, int currentRow, int currentCol)
-        {
-            Console.CursorVisible = false;
-
-            Console.SetCursorPosition(0, 0);
-
-            int rows = grid.GetLength(0);
-            int cols = grid.GetLength(1);
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    if (i == currentRow && j == currentCol)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(grid[i, j] + " ");
-                    }
-                    else if (visited[i, j])
-                    {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(grid[i, j] + " ");
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                        Console.Write(grid[i, j] + " ");
-                    }
-                }
-                Console.WriteLine();
-            }
-            Console.ResetColor();
-        }
-        public static void VisualHook(char[,] grid, bool[,] visited, int currentRow, int currentCol, int delayMs = 100)
-        {
-            DrawStep(grid, visited, currentRow, currentCol);
-            System.Threading.Thread.Sleep(delayMs);
-        }
-    }
-
     public static class BruteForceVisualizer
     {
         public static void Render(int[] arr)
@@ -519,6 +387,240 @@ public static class Utilites
                 Console.ResetColor();
             }
 
+        }
+    }
+
+    public static class MazeVisualizer
+    {
+        public static string[,] RenderGrid(int[,] grid, bool[,] visited, bool[,] path, int currentRow, int currentCol, int eRow, int eCol)
+        {
+            int rows = grid.GetLength(0);
+            int cols = grid.GetLength(1);
+
+            string[,] renderedCanvas = new string[rows, cols];
+
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    if (r == currentRow && c == currentCol)
+                    {
+                        renderedCanvas[r, c] = "🚀";
+                    }
+                    else if (r == eRow && c == eCol)
+                    {
+                        renderedCanvas[r, c] = "🏁";
+                    }
+
+                    else if (path[r, c])
+                    {
+                        renderedCanvas[r, c] = "🟢";
+                    }
+                    else if (visited[r, c])
+                    {
+                        renderedCanvas[r, c] = "🟡";
+                    }
+
+                    else if (grid[r, c] == 1)
+                    {
+                        renderedCanvas[r, c] = "▓▓";
+                    }
+                    else
+                    {
+                        renderedCanvas[r, c] = "  ";
+                    }
+                }
+            }
+
+            return renderedCanvas;
+        }
+        public static void DrawStep(string[,] renderedCanvas)
+        {
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(0, 0);
+
+            int rows = renderedCanvas.GetLength(0);
+            int cols = renderedCanvas.GetLength(1);
+
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    Console.Write(renderedCanvas[r, c]);
+                }
+                Console.WriteLine();
+            }
+        }
+
+        public static void VisualHook(int[,] grid, bool[,] visited, bool[,] path, int currentRow, int currentCol, int eRow, int eCol, int delayMs = 100)
+        {
+
+            string[,] canvas = RenderGrid(grid, visited, path, currentRow, currentCol, eRow, eCol);
+
+
+            DrawStep(canvas);
+
+            System.Threading.Thread.Sleep(delayMs);
+
+        }
+
+    }
+
+    public static class WordSearchVisualizer
+    {
+        public static void RenderGrid(char[,] grid)
+        {
+            int rows = grid.GetLength(0);
+            int cols = grid.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write(grid[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+        public static void DrawStep(char[,] grid, bool[,] visited, int currentRow, int currentCol)
+        {
+            Console.CursorVisible = false;
+
+            Console.SetCursorPosition(0, 0);
+
+            int rows = grid.GetLength(0);
+            int cols = grid.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (i == currentRow && j == currentCol)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(grid[i, j] + " ");
+                    }
+                    else if (visited[i, j])
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(grid[i, j] + " ");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.Write(grid[i, j] + " ");
+                    }
+                }
+                Console.WriteLine();
+            }
+            Console.ResetColor();
+        }
+        public static void VisualHook(char[,] grid, bool[,] visited, int currentRow, int currentCol, int delayMs = 100)
+        {
+            DrawStep(grid, visited, currentRow, currentCol);
+            System.Threading.Thread.Sleep(delayMs);
+        }
+    }
+
+    public static class NQueensVisalizer
+    {
+        public static void DrawBoard(char[,] grid, int activeRow, int activeCol, string statusMessage)
+        {
+
+            Console.SetCursorPosition(0, 0);
+            Console.CursorVisible = false;
+
+            int n = grid.GetLength(0);
+
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine($"=== N-Queens Backtracking Simulation ({n}x{n}) ===");
+            Console.WriteLine(new string('-', (n * 2) + 2));
+
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write("| ");
+                for (int j = 0; j < n; j++)
+                {
+                    char cell = grid[i, j];
+
+                    if (i == activeRow && j == activeCol && activeRow >= 0 && activeRow < n && activeCol >= 0 && activeCol < n)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Yellow;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                    }
+                    else if (cell == 'Q')
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(cell + " ");
+                        Console.ResetColor();
+                        continue;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                    }
+
+                    Console.Write(cell + " ");
+                    Console.ResetColor();
+                }
+                Console.WriteLine("|");
+            }
+
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine(new string('-', (n * 2) + 2));
+
+            
+
+            Console.SetCursorPosition(0, n + 3);
+
+            if (statusMessage.Contains("SUCCESS")) Console.ForegroundColor = ConsoleColor.Cyan;
+            else if (statusMessage.Contains("❌") || statusMessage.Contains("CONFLICT")) Console.ForegroundColor = ConsoleColor.Red;
+            else if (statusMessage.Contains("➔")) Console.ForegroundColor = ConsoleColor.Magenta;
+            else Console.ForegroundColor = ConsoleColor.White;
+
+            Console.WriteLine(statusMessage.PadRight(80));
+            Console.ResetColor();
+        }
+
+        public static class Simulation
+        {
+            public static List<char[,]> NQueen(char[,] chessBoard, int n, int delayMs = 500)
+            {
+                Console.Clear();
+                Console.CursorVisible = false;
+
+                List<char[,]> finalSolutions = NQueens.NQueen(chessBoard, n, (activeRow, activeCol, statusMessage) =>
+                {
+                    //Console.Clear();
+                    DrawBoard(chessBoard, activeRow, activeCol, statusMessage);
+                    if (statusMessage.Contains("FOUND"))
+                    {
+                        System.Threading.Thread.Sleep(2000);
+                    }
+                    else
+                    {
+                        System.Threading.Thread.Sleep(delayMs);
+                    }
+                });
+
+                Console.Clear();
+                Console.WriteLine($"=== Simulation Finished! Found {finalSolutions.Count} total valid solutions ===");
+                Console.WriteLine("Press any key to view the valid solutions...");
+                Console.ReadKey();
+                int solutionCounter = 1;
+                foreach (var solution in finalSolutions)
+                {
+                    Console.Clear();
+                    string msg = $"✔  Valid Solution {solutionCounter} of {finalSolutions.Count}";
+                    DrawBoard(solution, -1, -1, msg);
+                    solutionCounter++;
+                    Console.WriteLine("Press any key to see the next solution...");
+                    Console.ReadKey();
+                }
+
+                Console.WriteLine("All solutions displayed. Simulation completed successfully!");
+                return finalSolutions;
+            }
         }
     }
 }
